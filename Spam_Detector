@@ -237,13 +237,73 @@ X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_
 model = MultinomialNB()
 model.fit(X_train, y_train)
 
-pesan_baru = ["...."] #Test The Machine Here!!!
+hard_cases = [
+    "Bonus tahunan perusahaan sudah cair",
+    "Website sekolah sedang maintenance",
+    "Profit toko bulan ini meningkat",
+    "Hadiah ulang tahunmu sudah datang",
+    "Aku membuat website untuk tugas sekolah",
 
-prediksi = model.predict(vectorizer.transform(pesan_baru))
+    "Bonus deposit 300 persen untuk member baru",
+    "Website penghasil uang tanpa modal",
+    "Profit besar tanpa risiko",
+    "Hadiah eksklusif untuk pengguna baru",
+    "Dapatkan saldo gratis sekarang juga",
 
-if prediksi [0] == 1:
-  print("PESAN SPAM")
+    "Aku mendapat cashback dari pembayaran listrik",
+    "Perusahaan memberikan bonus kepada karyawan",
+    "Aku sedang belajar investasi saham",
+    "Ayah memenangkan hadiah lomba catur",
+    "Website kampus sedang diperbarui",
 
-else:
-  print("PESAN AMAN")
+    "Gr4tiss saldo dana langsung cair",
+    "Pr0f1t konsisten tanpa pengalaman",
+    "Kl41m h4diah sekarang juga",
+    "Jud1 online terpercaya",
+    "G4c0r maksimal anti kalah",
+
+    "Profit perusahaan naik setelah peluncuran produk baru",
+    "Bonus poin member sudah masuk ke akun",
+    "Aku membaca artikel tentang investasi jangka panjang",
+    "Website organisasi kami sedang maintenance",
+    "Kami mendapat hadiah dari acara sekolah",
+
+    "Dapatkan keuntungan harian tanpa kerja",
+    "Bonus referral hingga jutaan rupiah",
+    "Auto WD tercepat hari ini",
+    "Bergabung sekarang dan dapatkan hadiah langsung",
+    "Fr33 spin harian tanpa batas"
+]
+
+jawaban = [
+    0,0,0,0,0,
+    1,1,1,1,1,
+    0,0,0,0,0,
+    1,1,1,1,1,
+    0,0,0,0,0,
+    1,1,1,1,1
+]
+
+prediksi = []
+
+for pesan in hard_cases:
+    hasil = model.predict(
+        vectorizer.transform([pesan])
+    )[0]
+
+    prediksi.append(hasil)
+
+benar = 0
+
+for p, j in zip(prediksi, jawaban):
+    if p == j:
+        benar += 1
+
+akurasi = benar / len(jawaban)
+
+print(f"Benar : {benar}")
+print(f"Salah : {len(jawaban)-benar}")
+print(f"Akurasi Hard Case : {akurasi*100:.2f}%")
+
+
 
